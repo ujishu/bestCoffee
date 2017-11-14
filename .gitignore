@@ -1,0 +1,5 @@
+*.log
+*.egg
+build
+dbs
+*.egg-info
