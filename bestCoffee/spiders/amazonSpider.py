@@ -75,7 +75,7 @@ class AmazonSpider(scrapy.Spider):
         reviews_amount = "".join([i for i in reviews_amount_raw if i.isdigit()])
 
 
-        product_items = BestcoffeeItem(time = time, 
+        product_items = BestcoffeeItem(time = time,
                                         title = title, 
                                         product_url = product_url, 
                                         image_url = image_url,
