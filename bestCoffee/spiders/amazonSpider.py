@@ -4,6 +4,7 @@ import gzip
 import sys
 from scrapy.utils.log import configure_logging
 from datetime import datetime as dt
+from items import BestcoffeeItem
 
 class AmazonSpider(scrapy.Spider):
     
@@ -73,6 +74,20 @@ class AmazonSpider(scrapy.Spider):
         reviews_amount_raw = response.xpath('//*/div[@id="averageCustomerReviews"]/span[3]/a/span/text()').extract_first()
         reviews_amount = "".join([i for i in reviews_amount_raw if i.isdigit()])
 
+
+        product_items = BestcoffeeItem(time = time, 
+                                        title = title, 
+                                        product_url = product_url, 
+                                        image_url = image_url,
+                                        price = price,
+                                        currency = currency,
+                                        site = site,
+                                        location = location,
+                                        product_rating = product_rating
+                                        )
+        yield BestcoffeeItem
+
+        """
         return dict({
                 "time": time,
                 "title": title,
@@ -85,4 +100,4 @@ class AmazonSpider(scrapy.Spider):
                 "product_rating": product_rating,
                 "reviews_amount": reviews_amount,
             })
-        
+        """
