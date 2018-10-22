@@ -4,7 +4,7 @@ import gzip
 import sys
 from scrapy.utils.log import configure_logging
 from datetime import datetime as dt
-from items import BestcoffeeItem
+from bestCoffee.items import BestcoffeeItem
 
 class AmazonSpider(scrapy.Spider):
     
@@ -53,6 +53,7 @@ class AmazonSpider(scrapy.Spider):
         product_url = response.url
         image_url = response.xpath('//*/div[@id="imgTagWrapperId"]/img/@data-a-dynamic-image').extract_first()
         price = response.xpath('//*/span[@class="a-size-large a-color-price"]/text()').extract_first()
+        currency = None
         
         if price is None:
             try:
@@ -66,6 +67,9 @@ class AmazonSpider(scrapy.Spider):
             currency = "USD"
             price = price[1:]
         
+        if currency is not "USD":
+            currency = "not_extracted"
+
         try:    
             product_rating = response.xpath('//*/div[@id="averageCustomerReviews"]/span/span/span/a/i/span/text()').extract_first().strip()[:3]
         except:
@@ -81,11 +85,11 @@ class AmazonSpider(scrapy.Spider):
                                         image_url = image_url,
                                         price = price,
                                         currency = currency,
-                                        site = site,
-                                        location = location,
+                                        site = "amazon.com",
+                                        location = "location",
                                         product_rating = product_rating
                                         )
-        yield BestcoffeeItem
+        yield product_items
 
         """
         return dict({
