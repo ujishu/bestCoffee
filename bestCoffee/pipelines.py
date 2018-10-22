@@ -17,7 +17,8 @@ class BestcoffeePipeline(object):
         self.cur = self.connection.cursor()
 
     def process_item(self, item, spider):
-        self.cur.execute("insert into amazon() values(%s,%s,%s,%s,%s,%s,%s,%s,%s)", (item['time'],
+        self.cur.execute("insert into amazon(time, title, product_url, image_url, price, currency, site, location, product_rating) values(%s,%s,%s,%s,%s,%s,%s,%s,%s)", 
+                                                                (item['time'],
                                                                 item['title'],
                                                                 item['product_url'],
                                                                 item['image_url'],
